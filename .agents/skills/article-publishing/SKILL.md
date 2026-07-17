@@ -67,6 +67,8 @@ Record & Replay may automate only the stable native file-picker sequence. Do not
 
 ## Place Images by Filename
 
+Before enabling any image's `AI 활용 설정`, close the `라이브러리` drawer if it is open and verify that the drawer is no longer visible. Recheck immediately before each toggle and close it again if Naver reopened it.
+
 For each image in ascending filename order:
 
 1. Locate the staged image by its exact filename or `alt` value.
