@@ -1,0 +1,4 @@
+interface:
+  display_name: "Image Generation"
+  short_description: "Generate reference-grounded images for every marker"
+  default_prompt: "Use $image-generation to create one subject-specific, reference-grounded image for every image area in the latest article."

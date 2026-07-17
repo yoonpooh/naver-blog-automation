@@ -1,0 +1,4 @@
+interface:
+  display_name: "Article Publishing"
+  short_description: "Prepare, categorize, and publish a verified Naver Blog post"
+  default_prompt: "Use $article-publishing to transfer the latest completed article and ordered images into Naver Blog, verify every component, choose the closest existing category in publish settings, and publish once."

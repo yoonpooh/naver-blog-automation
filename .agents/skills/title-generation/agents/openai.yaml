@@ -1,0 +1,4 @@
+interface:
+  display_name: "Title Generation"
+  short_description: "Create one high-click, search-aligned blog title"
+  default_prompt: "Use $title-generation to create the best title for the keyword selected in this thread."

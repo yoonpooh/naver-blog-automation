@@ -1,0 +1,4 @@
+interface:
+  display_name: "Keyword Research"
+  short_description: "Find one breakout or durable traffic opportunity"
+  default_prompt: "Use $keyword-research to compare breakout and durable-demand opportunities and recommend one validated informational keyword."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Article Generation"
+  short_description: "Write an image-ready Korean blog article with hashtags"
+  default_prompt: "Use $article-generation to write the complete article for the title selected in this thread."
