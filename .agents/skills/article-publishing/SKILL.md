@@ -10,7 +10,7 @@ Transfer the latest completed article and its generated images into the logged-i
 ## Safety Boundary
 
 - Complete every verification before opening publish settings. Select only an existing category and click the final publish control once.
-- Never use editor-wide `Cmd+A`, bulk undo, or whole-document replacement after components have been inserted.
+- Never use editor-wide `Cmd+A` or whole-document replacement after components have been inserted. Do not use undo as a general repair mechanism. If the immediately preceding command unexpectedly replaced or removed unrelated article content, use exactly one immediate `Cmd+Z`, verify the complete source structure is restored, and stop that placement attempt before retrying.
 - Never improvise a repair after a mismatch. Stop the affected step, compare it with the source article, and repair only that component.
 - Use Chrome for text and DOM-backed editor operations. The image upload boundary is mandatory: use Computer Use exclusively from clicking `사진` through the native file picker's `열기` action.
 - Never use Chrome, Playwright, CDP, DOM injection, `setInputFiles`, a hidden file input, or clipboard file transfer to upload images. Do not fall back to them if Computer Use is inconvenient; stop and report the upload step as blocked.
@@ -61,6 +61,7 @@ Stop if the title, complete article, or any required image is missing. Do not re
 6. In Computer Use, verify that exactly the expected files are selected, then click the native `열기` button once.
 7. Only after the native file picker closes may control return to Chrome. Use Chrome to choose `개별사진`.
 8. Verify that Naver inserted the expected number of separate image components at the staging position and that their filenames remain in order.
+9. Before moving anything, record each staged image component ID in filename order. Naver may clear an image's filename or `alt` value after cut-and-paste, so use the recorded IDs for post-placement order verification.
 
 Record & Replay may automate only the stable native file-picker sequence. Do not replay the editor layout, scrolling, marker replacement, formatting, save, or publish steps.
 
@@ -70,12 +71,12 @@ For each image in ascending filename order:
 
 1. Locate the staged image by its exact filename or `alt` value.
 2. Select only that image component and cut it with `Cmd+X`.
-3. Select only its exact numbered marker paragraph.
-4. Paste the image component with `Cmd+V`.
-5. Verify that the total image count is unchanged, the target marker is gone, and the image appears between the intended surrounding paragraphs.
-6. Enable `AI 활용 설정` for that image and verify the control is active before continuing.
+3. Click only its exact numbered marker text. Press `Home`, then `Shift+End` to select that marker line. Never press `Cmd+A` here; in the Naver editor it can select the whole article.
+4. Paste the image component with `Cmd+V`. The filename or `alt` may become empty after a successful move; identify the moved component by its recorded ID instead.
+5. Verify that the total image count is unchanged, the target marker is gone, the image appears between the intended surrounding paragraphs, and the recorded title, heading count, and hashtags are unchanged.
+6. Select the moved image component so its controls become visible, enable `AI 활용 설정`, and verify its toggle is active (for example, `se-is-selected`) before continuing.
 
-If any check fails, stop before moving the next image. Never compensate with editor-wide selection, undo, or re-paste.
+If any check fails, stop before moving the next image. Outside the single immediate recovery allowed in Safety Boundary, never compensate with editor-wide selection, undo, or re-paste.
 
 After all images are placed, delete only the `[[UPLOAD_STAGING]]` paragraph. Confirm that no numbered or staging marker remains.
 
@@ -102,8 +103,9 @@ Require every check to pass:
 3. Choose the closest existing category for the article's primary keyword and informational intent. Prefer a specific match; if none fits, select `오늘의 이슈`. Never create, rename, or reorganize categories.
 4. Verify the selected category label. Do not change topic, visibility, comments, reactions, search exposure, sharing, publication time, notice status, or any other publish setting unless the user explicitly requested it.
 5. Confirm that the tag editor contains the expected article hashtags without missing or duplicate tags.
-6. Click the publish panel's final `발행` button once.
+6. Distinguish the publish panel's final `발행` control from the editor header button and require exactly one matching panel control before clicking it once.
 7. Verify publication succeeded by confirming the resulting post page, exact title, and stable Naver Blog post URL. If the panel remains open or success cannot be confirmed, report `blocked` and do not click the final button again.
+8. If the caller requested a success-only thread-title change, perform it only after the published post page, exact title, and URL are confirmed. Never change it for `partial` or `blocked` runs.
 
 ## Output
 
