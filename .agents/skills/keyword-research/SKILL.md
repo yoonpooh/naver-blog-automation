@@ -16,6 +16,17 @@ Research both lanes on every run. Do not prefer either lane by default.
 
 Include recurring seasonal queries in the durable lane only when the next demand window is approaching. Do not equate opportunity with the largest volume or the smallest total result count.
 
+## Performance Priors
+
+Use these as general tie-breakers, never as substitutes for live demand and supply evidence:
+
+- Prefer newly searchable official names for products, models, services, features, policies, and events when exact-intent coverage is still sparse.
+- Prefer clear follow-up intent such as price, release date, purchase or application method, availability, eligibility, usage, compatibility, differences, and precautions.
+- Within breakout candidates, prefer names likely to retain follow-up searches after launch because sales, rollout, updates, or recurring usage questions continue.
+- Keep sudden incidents and local issues eligible when people search an exact official name immediately after occurrence and reliable reporting supports a useful factual explainer; reject rumor-driven or tragedy-exploitative angles.
+- Penalize broad news or generic technology summaries without a concrete user question, especially when official or major-news results already satisfy the intent.
+- Reject restaurants, cafes, stores, travel stays, hands-on reviews, and other topics whose credible treatment depends on firsthand experience or original on-location photography.
+
 ## Agent Strategy
 
 Use two subagents for every full recommendation when available:
@@ -33,7 +44,7 @@ Ask each scout for 12-20 candidates with at least six per lane. Require the obse
 1. Run both scouts in parallel and reuse the user's existing Chrome session when available.
 2. Inspect breakout signals across the last few hours, 24 hours, 7 days, and 30 days. Inspect durable demand across 6-12 months and the same season in the previous year when available.
 3. Merge at least 20 distinct seeds with at least 10 per lane when signals permit. Record the observation time or trend window and source for every seed.
-4. Convert raw entities or headlines into likely informational follow-up queries. Keep the raw seed and query linked.
+4. Convert raw entities or headlines into likely informational follow-up queries, prioritizing actionable modifiers from the performance priors. Keep the raw seed and query linked.
 5. Deliberately include newly named products, services, features, regulations, events, and updates even when trend tools have not accumulated enough history.
 
 ### 2. Expand and cluster
@@ -41,7 +52,7 @@ Ask each scout for 12-20 candidates with at least six per lane. Require the obse
 6. Choose up to two seeds per lane. For breakout, require momentum, novelty, or an obvious supply gap. For durable, require stable or recurring demand plus a plausible rankable intent.
 7. Run the bundled keyword tool in expansion mode for each seed. Combine related keywords with Naver autocomplete and related searches. Make at most four expansion requests per run.
 8. Normalize spacing and case, remove duplicates, and cluster queries that satisfy the same intent. Keep the clearest natural-language query from each cluster.
-9. Reject navigational, purely promotional, duplicated, malformed, overly broad, or unrelated high-volume terms before scoring. Keep product keywords when the intended article is an independent informational explanation.
+9. Reject navigational, purely promotional, duplicated, malformed, overly broad, unrelated high-volume, firsthand-experience, or original-photo-dependent terms before scoring. Keep product keywords when the intended article is an independent informational explanation supported by reliable sources.
 
 ### 3. Evaluate each lane
 
