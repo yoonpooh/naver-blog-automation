@@ -1,0 +1,4 @@
+interface:
+  display_name: "Naver Place Blog Generation"
+  short_description: "Create a title, article, and referenced images from a Naver Place URL"
+  default_prompt: "Use $naver-place-blog-generation to turn the supplied Naver Place URL into a verified Korean blog title, article, and reference-grounded image set."
