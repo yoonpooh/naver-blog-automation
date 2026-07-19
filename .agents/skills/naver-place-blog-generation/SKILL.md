@@ -1,6 +1,6 @@
 ---
 name: naver-place-blog-generation
-description: Turn one Naver Place URL into a complete Korean Naver Blog package by verifying the place, establishing the primary keyword and article angle, then running $title-generation, $article-generation, and $image-generation in order. Use when the user supplies a Naver Map or Naver Place URL and asks for a title, body, review-style draft, or reference-grounded article images.
+description: Turn one Naver Place URL into a complete Korean Naver Blog package by verifying the place, establishing the primary keyword and article angle, then running $title-generation, $article-generation, and strictly Naver-Place-photo-grounded $image-generation in order. Use when the user supplies a Naver Map or Naver Place URL and asks for a title, body, review-style draft, or images derived from the real photos shown on that place page.
 ---
 
 # Naver Place Blog Generation
@@ -49,24 +49,29 @@ Invoke `$article-generation` using the selected title and the same verified cont
 - Cover only facts supported by the current place page or reliable corroborating sources.
 - Label changing details for rechecking instead of estimating them.
 - Keep source URLs in an internal evidence ledger; do not clutter the reader-facing article unless the user asks for sources.
+- Before drafting, map every planned marker to at least one downloaded Naver Place photo. Shape headings and nearby text so each marker can be illustrated by a real available reference instead of an abstract concept.
+- Do not create marker roles that require an unavailable exact exterior, interior, parking layout, booking screen, menu, facility, or service scene. Reuse a relevant real reference with a different crop, angle, distance, or lighting when references are fewer than markers.
 
 ## 5. Generate reference-grounded images
 
 Invoke `$image-generation` for every article marker.
 
-1. Use actual photos from the supplied place page as the first-choice references for the building, entrance, parking, food, menu presentation, interior, signage, mascot, and other must-show anchors.
-2. Save one to three verified reference images per must-show anchor and record each source URL and role in the image manifest.
-3. Preserve the real subject identity. Angle, crop, distance, time of day, and lighting may change, but do not invent a facade, dish, room, facility, parking layout, sign, label, or price.
-4. If the page lacks a reference for a section, generate an honest concept-only image or omit the unsupported exact subject. State the limitation; never fill it from model memory.
-5. Remove source watermarks from generated outputs and reject malformed or invented text. Verified business signage may remain only when it is reproduced faithfully.
-6. Treat every output as AI-generated. Never describe it as a photograph taken during the user's visit.
+1. Download actual owner or visitor photos exposed by the supplied Naver Place page. Save one to three verified references per marker and record each source URL and role in the image manifest.
+2. Require at least one real local Naver Place photo for every marker. Pass those exact local paths to the worker and require `$imagegen` to receive them as reference image inputs, not merely as prose descriptions.
+3. Use a reference-led generation or precise-object-edit use case. Preserve the reference subject, service result, setting, equipment, food, building, sign, and other identity-bearing details. Change only angle, crop, distance, composition, or lighting.
+4. Never generate concept-only or generic substitute imagery in this workflow. Ban abstract calendars, clocks, phones, cars, keys, location pins, icons, miniature scenes, blank checklists, stock props, and invented interfaces unless that exact object is visible in a supplied Naver Place reference.
+5. When references are fewer than markers, reuse the closest real photo with materially different framing or lighting. When no usable Place photo exists at all, stop the image stage and report the missing reference instead of generating from text or model memory.
+6. Remove source watermarks from generated outputs and reject malformed or invented text. Verified business signage may remain only when reproduced faithfully.
+7. Treat every output as AI-generated. Never describe it as a photograph taken during the user's visit.
 
 ## Final check
 
 - The exact verified place name anchors the keyword, title, and article.
 - The title promise is answered by the article.
 - Marker count equals generated image count and every marker is replaced in order.
-- Every must-show real subject has a recorded reference URL and role.
+- Every marker has at least one recorded Naver Place reference URL, local path, explicit role, and confirmation that the file was supplied to `$imagegen`.
+- Every output remains visibly traceable to its assigned reference in a side-by-side identity check; matching only its palette or general category is a failure.
+- No concept-only image or generic calendar, phone, car, icon, miniature, checklist, or unrelated stock prop remains.
 - No unsupported firsthand claim, invented place detail, malformed sign, or source watermark remains.
 - `$title-generation`, `$article-generation`, and `$image-generation` were all used; `$article-publishing` was not used.
 

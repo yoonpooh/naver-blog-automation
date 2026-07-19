@@ -19,7 +19,7 @@ Generate every article image without asking the user to repeat usable thread con
 
 ## Delegate
 
-1. Use parallel subagents. Keep the root agent as coordinator and run at most three image workers concurrently; reuse completed workers for remaining markers.
+1. Use parallel subagents. Keep the root agent as coordinator and run up to `min(marker count, 6, available non-root agent slots)` image workers concurrently; reuse completed workers for remaining markers.
 2. Assign exactly one marker and one output path to each worker. Give it only:
    - the title and primary keyword;
    - marker index and role;
