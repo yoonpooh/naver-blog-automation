@@ -10,11 +10,14 @@ Transfer the latest completed article and its generated images into the logged-i
 ## Safety Boundary
 
 - Complete every verification before opening publish settings. Select only an existing category and click the final publish control once.
+- Use at most one primary write tab and one fallback write tab per article. Never open a third write tab, and never rebuild the article more than once.
+- Never clear, replace, or re-enter an article in a tab that already contains content. If that tab's state is uncertain, preserve it and stop using it.
 - Never use editor-wide `Cmd+A` or whole-document replacement after components have been inserted. Do not use undo as a general repair mechanism. If the immediately preceding command unexpectedly replaced or removed unrelated article content, use exactly one immediate `Cmd+Z`, verify the complete source structure is restored, and stop that placement attempt before retrying.
 - Never improvise a repair after a mismatch. Stop the affected step, compare it with the source article, and repair only that component.
 - Use Chrome for text and DOM-backed editor operations. The image upload boundary is mandatory: use Computer Use exclusively from clicking `사진` through the native file picker's `열기` action.
 - Never use Chrome, Playwright, CDP, DOM injection, `setInputFiles`, a hidden file input, or clipboard file transfer to upload images. Do not fall back to them if Computer Use is inconvenient; stop and report the upload step as blocked.
 - Do not use Computer Use `type_text` for Korean copy. It can be corrupted by the active input method. Use Chrome text entry or clipboard paste from the exact source.
+- Never translate coordinates from a Chrome/Browser screenshot into Computer Use screen coordinates. A Computer Use click requires a fresh Computer Use accessibility target or Computer Use screenshot; if neither is available, stop as blocked.
 
 ## Inputs
 
@@ -40,6 +43,14 @@ Stop if the title, complete article, or any required image is missing. Do not re
 1. Reuse the user's logged-in Chrome session and open the Naver Blog write editor.
 2. If Naver offers an earlier draft, follow the user's stated intent: resume only when requested; otherwise start the new draft. If intent is ambiguous and discarding content would be risky, stop for confirmation.
 3. Confirm that the editor is ready before entering content.
+4. Record the primary write tab before entering content. Do not create another write tab preemptively.
+5. If an OS-level Computer Use click on `사진` is not delivered in the primary tab, do not retry or alter that tab. A single fallback is allowed:
+   - preserve the primary tab as-is;
+   - open exactly one new logged-in write tab directly through Computer Use;
+   - require a fresh, usable Computer Use accessibility state or screenshot before entering anything;
+   - keep the fallback tab free of Chrome, Playwright, CDP, or debugger control until the native picker closes;
+   - reproduce the exact source only by clipboard paste and Computer Use formatting, never Korean `type_text`;
+   - if copy, formatting, or upload cannot be verified in that Computer Use-only tab, stop as blocked. Never open a third tab or return to a preserved tab for another attempt.
 
 ## Enter Text First
 
@@ -56,12 +67,13 @@ Stop if the title, complete article, or any required image is missing. Do not re
 1. Put a caret in an empty paragraph immediately after `[[UPLOAD_STAGING]]`.
 2. Verify that no title, heading, body text, marker, or component is selected. Abort the upload if any text selection exists.
 3. Switch to Computer Use before clicking `사진`. Computer Use must perform the entire upload sequence: click `사진`, operate the native file picker, navigate to the prepared directory, select the files, and click `열기`.
-4. While the native file picker is open, do not use Chrome or any browser automation API. Re-read the current Computer Use accessibility state before every interaction.
-5. In Computer Use, use `Cmd+A` only when the directory contains exactly the expected image files and no folders or unrelated files. Otherwise select the first expected file and extend the selection through the last expected file.
-6. In Computer Use, verify that exactly the expected files are selected, then click the native `열기` button once.
-7. Only after the native file picker closes may control return to Chrome. Use Chrome to choose `개별사진`.
-8. Verify that Naver inserted the expected number of separate image components at the staging position and that their filenames remain in order.
-9. Before moving anything, record each staged image component ID in filename order. Naver may clear an image's filename or `alt` value after cut-and-paste, so use the recorded IDs for post-placement order verification.
+4. After clicking `사진`, require fresh Computer Use evidence that the native file picker is actually open. Do not send picker shortcuts, paths, or selection keys based only on the click being issued.
+5. While the native file picker is open, do not use Chrome or any browser automation API. Re-read the current Computer Use accessibility state before every interaction.
+6. In Computer Use, use `Cmd+A` only when the directory contains exactly the expected image files and no folders or unrelated files. Otherwise select the first expected file and extend the selection through the last expected file.
+7. In Computer Use, verify that exactly the expected files are selected, then click the native `열기` button once.
+8. Only after the native file picker closes may control return to Chrome. A fallback tab may be claimed or debug-controlled only at this point. Use Chrome to choose `개별사진`.
+9. Verify that Naver inserted the expected number of separate image components at the staging position and that their filenames remain in order.
+10. Before moving anything, record each staged image component ID in filename order. Naver may clear an image's filename or `alt` value after cut-and-paste, so use the recorded IDs for post-placement order verification.
 
 Record & Replay may automate only the stable native file-picker sequence. Do not replay the editor layout, scrolling, marker replacement, formatting, save, or publish steps.
 
