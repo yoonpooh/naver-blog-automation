@@ -23,6 +23,7 @@ Use these as general tie-breakers, never as substitutes for live demand and supp
 - Prefer newly searchable official names for products, models, services, features, policies, and events when exact-intent coverage is still sparse.
 - Prefer clear follow-up intent such as price, release date, purchase or application method, availability, eligibility, usage, compatibility, differences, and precautions.
 - Within breakout candidates, prefer names likely to retain follow-up searches after launch because sales, rollout, updates, or recurring usage questions continue.
+- When the blog's own statistics are accessible, use comparable 7-day and 30-day post performance as an account-specific tie-breaker after live demand and supply evidence. Compare the same post-publication window or views per day, note search inflow, and never compare raw lifetime totals across posts of different ages.
 - Keep sudden incidents and local issues eligible when people search an exact official name immediately after occurrence and reliable reporting supports a useful factual explainer; reject rumor-driven or tragedy-exploitative angles.
 - Penalize broad news or generic technology summaries without a concrete user question, especially when official or major-news results already satisfy the intent.
 - Reject restaurants, cafes, stores, travel stays, hands-on reviews, and other topics whose credible treatment depends on firsthand experience or original on-location photography.
@@ -35,7 +36,7 @@ Use two subagents for every full recommendation when available:
 - Trend scout: inspect Google Trends Korea, Pandarank, official launches, release notes, scheduled events, and established informational queries with stable or seasonal demand.
 - Main agent: maintain both lanes, expand seeds, cluster intent, select a winner from each lane, audit finalists, and choose the final keyword.
 
-Ask each scout for 12-20 candidates with at least six per lane. Require the observed signal or trend period, source URL, likely informational query, and apparent blog supply. Do not let scouts rank the final winner. Use no more than two subagents and do not duplicate research.
+Ask each scout for 6-10 initial candidates with at least three per lane. Require the observed signal or trend period, source URL, likely informational query, and apparent blog supply. Expand toward 12-20 only when a lane lacks enough credible options or the finalists remain ambiguous. Do not let scouts rank the final winner. Use no more than two subagents and do not duplicate research.
 
 ## Workflow
 
@@ -43,44 +44,45 @@ Ask each scout for 12-20 candidates with at least six per lane. Require the obse
 
 1. Run both scouts in parallel and reuse the user's existing Chrome session when available.
 2. Inspect breakout signals across the last few hours, 24 hours, 7 days, and 30 days. Inspect durable demand across 6-12 months and the same season in the previous year when available.
-3. Merge at least 20 distinct seeds with at least 10 per lane when signals permit. Record the observation time or trend window and source for every seed.
+3. Merge at least 12 distinct seeds with at least six per lane when signals permit. Expand toward 20 only when a lane lacks credible options or the finalists remain ambiguous. Record the observation time or trend window and source for every seed.
 4. Convert raw entities or headlines into likely informational follow-up queries, prioritizing actionable modifiers from the performance priors. Keep the raw seed and query linked.
 5. Deliberately include newly named products, services, features, regulations, events, and updates even when trend tools have not accumulated enough history.
+6. Check keywords already selected in the current run and, when accessible, the last 90 days of published posts. Reject the same entity and intent; allow a clearly different follow-up intent that does not compete with the existing post.
 
 ### 2. Expand and cluster
 
-6. Choose up to two seeds per lane. For breakout, require momentum, novelty, or an obvious supply gap. For durable, require stable or recurring demand plus a plausible rankable intent.
-7. Run the bundled keyword tool in expansion mode for each seed. Combine related keywords with Naver autocomplete and related searches. Make at most four expansion requests per run.
-8. Normalize spacing and case, remove duplicates, and cluster queries that satisfy the same intent. Keep the clearest natural-language query from each cluster.
-9. Reject navigational, purely promotional, duplicated, malformed, overly broad, unrelated high-volume, firsthand-experience, or original-photo-dependent terms before scoring. Keep product keywords when the intended article is an independent informational explanation supported by reliable sources.
+7. Choose up to two seeds per lane. For breakout, require momentum, novelty, or an obvious supply gap. For durable, require stable or recurring demand plus a plausible rankable intent.
+8. Run the bundled keyword tool in expansion mode for each seed. Combine related keywords with Naver autocomplete and related searches. Make at most four expansion requests per run.
+9. Normalize spacing and case, remove duplicates, and cluster queries that satisfy the same intent. Keep the clearest natural-language query from each cluster.
+10. Reject navigational, purely promotional, duplicated, malformed, overly broad, unrelated high-volume, firsthand-experience, or original-photo-dependent terms before scoring. Keep product keywords when the intended article is an independent informational explanation supported by reliable sources.
 
 ### 3. Evaluate each lane
 
-10. Build separate internal evidence tables. Record trend window, SearchAd match, intent cluster demand, and sampled blog supply.
-11. Score breakout candidates from 0-5 on:
+11. Build separate internal evidence tables. Record trend window, SearchAd match, intent cluster demand, and sampled blog supply.
+12. Score breakout candidates from 0-5 on:
    - content-supply gap: few exact-intent posts, stale or incomplete answers, and low first-page saturation (30%);
    - momentum: recency, acceleration, and agreement across independent sources (25%);
    - demonstrated demand: SearchAd, autocomplete, related searches, news repetition, and community curiosity (20%);
-   - novelty and timing: a newly searchable name or change with an early-publisher advantage (15%);
-   - intent clarity and evidence: one useful article supported by reliable sources (10%).
-12. Score durable candidates from 0-5 on:
+   - novelty and timing: a newly searchable name or change with an early-publisher advantage (10%);
+   - actionable intent and evidence: a clear follow-up question that one useful article can answer from reliable sources (15%).
+13. Score durable candidates from 0-5 on:
    - durable demand: meaningful SearchAd cluster volume and stable, rising, or predictably seasonal 6-12 month interest (30%);
    - content-supply gap: few exact-intent answers, stale coverage, or an important unanswered sub-intent (30%);
    - ranking feasibility: limited first-page saturation by strong exact-intent posts and room for a clearer or fresher answer (20%);
    - intent clarity: one recurring informational need answerable in one post (15%);
    - maintainability: facts can be sourced and updated when needed (5%).
-13. Treat scores only as internal comparison aids. Do not claim guaranteed ranking, visits, or a fabricated demand-to-document ratio.
-14. Keep one winner from each lane. Let low-volume breakout queries win when live demand and supply scarcity are strong; let durable queries win when repeated demand and realistic ranking potential offer greater expected value.
+14. Treat scores only as internal comparison aids. Do not claim guaranteed ranking, visits, or a fabricated demand-to-document ratio.
+15. Keep one winner from each lane. Let low-volume breakout queries win when live demand and supply scarcity are strong; let durable queries win when repeated demand and realistic ranking potential offer greater expected value.
 
 ### 4. Audit finalists
 
-15. Audit the top two candidates from each lane on both Naver integrated search and Naver Blog search at `https://search.naver.com/search.naver?where=blog&query=<keyword>`.
-16. Inspect at least the first 20 visible blog results per finalist. Record exact-intent matches, publication age, clearly commercial posts, strong publishers, and results that fully answer the query. For durable candidates, inspect older results far enough to distinguish sustained demand from a one-time spike.
-17. Do not treat total result count as relevant competition. Distinguish exact answers from incidental mentions and near-duplicate intent.
-18. Search one natural query variant per finalist. Open three to five representative posts, including the strongest current answers, and inspect their completeness, freshness, sourcing, and promotion level.
-19. Reject high-volume keywords when the first page already satisfies the intent well or is dominated by unreasonably strong exact-match results. Reject low-supply keywords without demonstrated demand.
-20. Verify the proposed article against reliable primary sources. Reject politics, celebrity gossip, rumor, tragedy exploitation, purely promotional content, individualized medical/legal/financial advice, and unverifiable topics.
-21. Compare the lane winners on evidence-backed expected value: breakout timing over the next days versus durable traffic and rankability over the next months. Select exactly one query.
+16. Audit the winner from each lane on both Naver integrated search and Naver Blog search at `https://search.naver.com/search.naver?where=blog&query=<keyword>`.
+17. Inspect the first 10 visible blog results per finalist. Extend to 20 only when exact-intent saturation remains ambiguous or the lane winners are close. Record exact-intent matches, publication age, clearly commercial posts, strong publishers, and results that fully answer the query. For durable candidates, inspect older results far enough to distinguish sustained demand from a one-time spike.
+18. Do not treat total result count as relevant competition. Distinguish exact answers from incidental mentions and near-duplicate intent.
+19. Search one natural query variant per finalist. Open the two strongest representative posts and extend to three to five only when their completeness, freshness, sourcing, or promotion level remains unclear.
+20. Reject high-volume keywords when the first page already satisfies the intent well or is dominated by unreasonably strong exact-match results. Reject low-supply keywords without demonstrated demand.
+21. Verify the proposed article against reliable primary sources. Reject politics, celebrity gossip, rumor, tragedy exploitation, purely promotional content, individualized medical/legal/financial advice, and unverifiable topics.
+22. Compare the lane winners on evidence-backed expected value: breakout timing over the next days versus durable traffic and rankability over the next months. Select exactly one query.
 
 ## Keyword Tool Validation
 
@@ -99,7 +101,7 @@ python3 .agents/skills/keyword-research/scripts/naver_keyword_tool.py "<candidat
 The script reads `NAVER_SEARCHAD_API_KEY`, `NAVER_SEARCHAD_SECRET_KEY`, and `NAVER_SEARCHAD_CUSTOMER_ID` from the process environment or the project `.env` file.
 
 - Prefer an exact normalized match.
-- Make at most four API requests for expansion and reuse those results when validating finalists.
+- Make at most four API requests for expansion. If an expansion result already contains the finalist's exact normalized match, reuse that row; call the script again only when it does not.
 - Treat `monthly_total_estimate` as directional demand, not real-time traffic or a guaranteed visit count.
 - Treat values derived from `< 10` as estimates, not exact volumes.
 - Never expose credentials in commands, logs, or the response.

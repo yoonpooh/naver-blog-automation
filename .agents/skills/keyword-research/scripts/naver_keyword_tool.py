@@ -119,9 +119,12 @@ def main():
     args = parser.parse_args()
     if not 1 <= args.limit <= 50 or args.min_volume < 0:
         parser.error("--limit must be 1-50 and --min-volume must be non-negative")
+    keyword = args.keyword.strip()
+    if not keyword:
+        parser.error("keyword must not be empty")
     load_dotenv()
     try:
-        print(json.dumps(fetch(args.keyword.strip(), args.expand, args.limit, args.min_volume), ensure_ascii=False, indent=2))
+        print(json.dumps(fetch(keyword, args.expand, args.limit, args.min_volume), ensure_ascii=False, indent=2))
     except urllib.error.HTTPError as error:
         message = "rate limited" if error.code == 429 else f"HTTP {error.code}"
         raise SystemExit(f"Naver keyword tool failed: {message}") from None
